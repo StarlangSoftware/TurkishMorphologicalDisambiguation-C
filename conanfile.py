@@ -5,7 +5,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 from conan.tools.files import copy
 
 
-class DataGeneratorConan(ConanFile):
+class MorphologicalDisambiguationConan(ConanFile):
     name = "morphological_disambiguation_c"
     version = "1.0.0"
     requires = ["morphological_analysis_c/1.0.0",
