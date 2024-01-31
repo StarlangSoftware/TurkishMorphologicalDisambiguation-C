@@ -24,7 +24,7 @@ Array_list_ptr disambiguate_longest_root_first(Hash_map_ptr root_list, Fsm_parse
     Fsm_parse_ptr best_parse;
     for (int i = 0; i < size; i++) {
         Fsm_parse_list_ptr fsmParseList = fsm_parses[i];
-        char* best_root;
+        char* best_root = "";
         char* surface_form = ((Fsm_parse_ptr) array_list_get(fsmParseList->fsm_parses, 0))->form;
         if (hash_map_contains(root_list, surface_form)){
             best_root = hash_map_get(root_list, surface_form);

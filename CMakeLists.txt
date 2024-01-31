@@ -28,3 +28,14 @@ add_executable(DummyDisambiguationTest src/AutoDisambiguator.c src/AutoDisambigu
         src/HmmDisambiguation.h
         Test/DummyDisambiguationTest.c)
 target_link_libraries(DummyDisambiguationTest morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c)
+add_executable(LongestRootFirstDisambiguationTest src/AutoDisambiguator.c src/AutoDisambiguator.h
+        src/DummyDisambiguation.c
+        src/DummyDisambiguation.h
+        src/RootFirstDisambiguation.c
+        src/RootFirstDisambiguation.h
+        src/LongestRootFirstDisambiguation.c
+        src/LongestRootFirstDisambiguation.h
+        src/HmmDisambiguation.c
+        src/HmmDisambiguation.h
+        Test/LongestRootFirstDisambiguationTest.c)
+target_link_libraries(LongestRootFirstDisambiguationTest morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c)

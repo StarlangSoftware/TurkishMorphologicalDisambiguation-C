@@ -1,18 +1,18 @@
 //
-// Created by Olcay Taner YILDIZ on 29.01.2024.
+// Created by Olcay Taner YILDIZ on 31.01.2024.
 //
-
 #include <FsmMorphologicalAnalyzer.h>
 #include <Corpus.h>
 #include <DisambiguationCorpus.h>
 #include <DisambiguatedWord.h>
 #include <Memory/Memory.h>
 #include <string.h>
-#include "../src/DummyDisambiguation.h"
+#include "../src/LongestRootFirstDisambiguation.h"
 
 int main(){
     Fsm_morphological_analyzer_ptr fsm = create_fsm_morphological_analyzer3();
     Corpus_ptr corpus = create_disambiguation_corpus("penntreebank.txt");
+    Hash_map_ptr map = train_longest_root_first();
     int correct_parse = 0, total_parse = 0;
     for (int i = 0; i < corpus->sentences->size; i++){
         Sentence_ptr sentence = array_list_get(corpus->sentences, i);
@@ -23,7 +23,7 @@ int main(){
         }
         Fsm_parse_list_ptr* fsm_parses = robust_morphological_analysis2(fsm, new_sentence);
         free_sentence(new_sentence);
-        Array_list_ptr correct_parses =  disambiguate_dummy(fsm_parses, sentence->words->size);;
+        Array_list_ptr correct_parses =  disambiguate_longest_root_first(map, fsm_parses, sentence->words->size);
         for (int j = 0; j < sentence->words->size; j++){
             Disambiguated_word_ptr word1 = array_list_get(sentence->words, j);
             Fsm_parse_ptr fsm_parse = array_list_get(correct_parses, j);
