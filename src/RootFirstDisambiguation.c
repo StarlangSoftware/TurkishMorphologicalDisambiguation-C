@@ -121,6 +121,14 @@ void free_hmm_model(Hmm_model_ptr model) {
     free_n_gram(model->word_bi_gram_model);
 }
 
+/**
+ * The disambiguate method gets an array of fsmParses. Then loops through that parses and finds the most probable root
+ * word and removes the other words which are identical to the most probable root word. At the end, gets the most probable parse
+ * among the fsmParses and adds it to the correctFsmParses {@link ArrayList}.
+ * @param model Hmm model used to disambiguate parses.
+ * @param fsm_parses {@link FsmParseList} to disambiguate.
+ * @return correctFsmParses {@link ArrayList} which holds the most probable parses.
+ */
 Array_list_ptr disambiguate_root_first(Hmm_model_ptr model,
                                        Fsm_parse_list_ptr *fsm_parses,
                                        int size) {
