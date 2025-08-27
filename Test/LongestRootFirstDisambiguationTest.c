@@ -11,7 +11,7 @@
 
 int main(){
     Fsm_morphological_analyzer_ptr fsm = create_fsm_morphological_analyzer3();
-    Corpus_ptr corpus = create_disambiguation_corpus("penntreebank.txt");
+    Corpus_ptr corpus = create_disambiguation_corpus("datasets/atis.txt");
     Hash_map_ptr map = train_longest_root_first();
     int correct_parse = 0, total_parse = 0;
     for (int i = 0; i < corpus->sentences->size; i++){
