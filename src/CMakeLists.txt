@@ -16,4 +16,4 @@ add_library(MorphologicalDisambiguation AutoDisambiguator.c AutoDisambiguator.h
         LongestRootFirstDisambiguation.h
         HmmDisambiguation.c
         HmmDisambiguation.h)
-target_link_libraries(MorphologicalDisambiguation morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c)
+target_link_libraries(MorphologicalDisambiguation morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c m)
