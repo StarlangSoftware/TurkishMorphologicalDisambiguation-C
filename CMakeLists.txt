@@ -16,7 +16,7 @@ add_library(MorphologicalDisambiguation src/AutoDisambiguator.c src/AutoDisambig
         src/LongestRootFirstDisambiguation.h
         src/HmmDisambiguation.c
         src/HmmDisambiguation.h)
-target_link_libraries(MorphologicalDisambiguation morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c)
+target_link_libraries(MorphologicalDisambiguation morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c m)
 add_executable(DummyDisambiguationTest src/AutoDisambiguator.c src/AutoDisambiguator.h
         src/DummyDisambiguation.c
         src/DummyDisambiguation.h
@@ -27,7 +27,7 @@ add_executable(DummyDisambiguationTest src/AutoDisambiguator.c src/AutoDisambigu
         src/HmmDisambiguation.c
         src/HmmDisambiguation.h
         Test/DummyDisambiguationTest.c)
-target_link_libraries(DummyDisambiguationTest morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c)
+target_link_libraries(DummyDisambiguationTest morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c m)
 add_executable(LongestRootFirstDisambiguationTest src/AutoDisambiguator.c src/AutoDisambiguator.h
         src/DummyDisambiguation.c
         src/DummyDisambiguation.h
@@ -38,4 +38,4 @@ add_executable(LongestRootFirstDisambiguationTest src/AutoDisambiguator.c src/Au
         src/HmmDisambiguation.c
         src/HmmDisambiguation.h
         Test/LongestRootFirstDisambiguationTest.c)
-target_link_libraries(LongestRootFirstDisambiguationTest morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c)
+target_link_libraries(LongestRootFirstDisambiguationTest morphological_analysis_c::morphological_analysis_c hmm_c::hmm_c n_gram_c::n_gram_c m)
