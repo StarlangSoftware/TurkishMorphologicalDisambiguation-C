@@ -20,7 +20,7 @@
  * @param corpus DisambiguationCorpus to train.
  */
 Hmm_model_ptr train_hmm(Corpus_ptr corpus) {
-    Hmm_model_ptr model = malloc_(sizeof(Hmm_model), "train_hmm");
+    Hmm_model_ptr model = malloc_(sizeof(Hmm_model));
     int i, j;
     Sentence_ptr sentence;
     Disambiguated_word_ptr word, word2;
@@ -86,11 +86,11 @@ Array_list_ptr disambiguate_hmm(Hmm_model_ptr model,
         }
     }
     Array_list_ptr correct_fsm_parses = create_array_list();
-    double** probabilities = malloc_(size * sizeof(double *), "disambiguate_hmm_1");
-    int** best = malloc_(size * sizeof(int*), "disambiguate_hmm_2");
+    double** probabilities = malloc_(size * sizeof(double *));
+    int** best = malloc_(size * sizeof(int*));
     for (int i = 0; i < size; i++) {
-        probabilities[i] = malloc_(fsm_parses[i]->fsm_parses->size * sizeof(double), "disambiguate_hmm_3");
-        best[i] = malloc_(fsm_parses[i]->fsm_parses->size * sizeof(int), "disambiguate_hmm_4");
+        probabilities[i] = malloc_(fsm_parses[i]->fsm_parses->size * sizeof(double));
+        best[i] = malloc_(fsm_parses[i]->fsm_parses->size * sizeof(int));
     }
     for (int i = 0; i < fsm_parses[0]->fsm_parses->size; i++) {
         Fsm_parse_ptr currentParse = array_list_get(fsm_parses[0]->fsm_parses, i);

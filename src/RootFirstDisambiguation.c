@@ -160,7 +160,7 @@ Array_list_ptr disambiguate_root_first(Hmm_model_ptr model,
  * @param corpus DisambiguationCorpus to train.
  */
 Hmm_model_ptr train_root_first(Corpus_ptr corpus) {
-    Hmm_model_ptr model = malloc_(sizeof(Hmm_model), "train_root_first");
+    Hmm_model_ptr model = malloc_(sizeof(Hmm_model));
     int i, j;
     Sentence_ptr sentence;
     Disambiguated_word_ptr word, word2;
