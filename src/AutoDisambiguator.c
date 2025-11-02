@@ -54,7 +54,11 @@ char *next_word_pos(Fsm_parse_list_ptr next_parse_list) {
                                                        (int (*)(const void *, const void *)) compare_string);
     for (int i = 0; i < next_parse_list->fsm_parses->size; i++) {
         Fsm_parse_ptr fsm_parse = array_list_get(next_parse_list->fsm_parses, i);
-        put_counter_hash_map(map, get_fsm_parse_pos(fsm_parse));
+        char* pos = get_fsm_parse_pos(fsm_parse);
+        put_counter_hash_map(map, pos);
+        if (count_counter_hash_map(map, pos) > 1) {
+            free_(pos);
+        }
     }
     char *result = clone_string(max_counter_hash_map(map));
     free_counter_hash_map2(map, free_);
@@ -89,8 +93,11 @@ bool next_word_exists(int index, int length) {
  * @return True, if there is at least one word after the current word and that next word is a noun, false otherwise.
  */
 bool is_next_word_noun(int index, Fsm_parse_list_ptr *fsm_parses, int length) {
+    if (index + 1 == length) {
+        return false;
+    }
     char *pos = next_word_pos(fsm_parses[index + 1]);
-    bool result = index + 1 < length && strcmp(pos, "NOUN") == 0;
+    bool result = strcmp(pos, "NOUN") == 0;
     free_(pos);
     return result;
 }
@@ -104,8 +111,11 @@ bool is_next_word_noun(int index, Fsm_parse_list_ptr *fsm_parses, int length) {
  * otherwise.
  */
 bool is_next_word_num(int index, Fsm_parse_list_ptr *fsm_parses, int length) {
+    if (index + 1 == length) {
+        return false;
+    }
     char *pos = next_word_pos(fsm_parses[index + 1]);
-    bool result = index + 1 < length && strcmp(pos, "NUM") == 0;
+    bool result = strcmp(pos, "NUM") == 0;
     free_(pos);
     return result;
 }
@@ -119,8 +129,11 @@ bool is_next_word_num(int index, Fsm_parse_list_ptr *fsm_parses, int length) {
  * false otherwise.
  */
 bool is_next_word_noun_or_adjective(int index, Fsm_parse_list_ptr *fsm_parses, int length) {
+    if (index + 1 == length) {
+        return false;
+    }
     char *pos = next_word_pos(fsm_parses[index + 1]);
-    bool result = index + 1 < length && string_in_list(pos, (char *[]) {"NOUN", "ADJ", "DET"}, 3);
+    bool result = string_in_list(pos, (char *[]) {"NOUN", "ADJ", "DET"}, 3);
     free_(pos);
     return result;
 }
@@ -1648,11 +1661,13 @@ Fsm_parse_ptr case_disambiguator(int index,
             Fsm_parse_ptr fsm_parse = array_list_get(fsmParseList->fsm_parses, i);
             char *list = transition_list(fsm_parse);
             if (str_contains(list, defaultCase)) {
+                free_(caseString);
                 free_(list);
                 return fsm_parse;
             }
             free_(list);
         }
     }
+    free_(caseString);
     return array_list_get(fsmParseList->fsm_parses, 0);
 }

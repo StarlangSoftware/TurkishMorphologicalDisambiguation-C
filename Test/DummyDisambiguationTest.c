@@ -11,6 +11,7 @@
 #include "../src/DummyDisambiguation.h"
 
 int main(){
+    start_x_large_memory_check();
     Fsm_morphological_analyzer_ptr fsm = create_fsm_morphological_analyzer3();
     Corpus_ptr corpus = create_disambiguation_corpus("datasets/atis.txt");
     int correct_parse = 0, total_parse = 0;
@@ -42,4 +43,5 @@ int main(){
     }
     free_disambiguation_corpus(corpus);
     free_fsm_morphological_analyzer(fsm);
+    end_memory_check();
 }
