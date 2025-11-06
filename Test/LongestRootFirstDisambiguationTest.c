@@ -41,6 +41,7 @@ int main(){
         free_(fsm_parses);
         free_array_list(correct_parses, (void (*)(void *)) free_fsm_parse);
     }
+    free_hash_map(map, free_);
     free_disambiguation_corpus(corpus);
     free_fsm_morphological_analyzer(fsm);
     end_memory_check();
