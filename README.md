@@ -70,7 +70,7 @@ For Developers
 
 You can also see [Java](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation), [Python](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-Py), 
 [Cython](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-Cy), [Js](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-Js), 
-[C++](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-CPP), [Swift](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-Swift), or [C#](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-CS) repository.
+[C++](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-CPP), [Swift](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-Swift), [Php](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-Php), or [C#](https://github.com/starlangsoftware/TurkishMorphologicalDisambiguation-CS) repository.
 
 ## Requirements
 
