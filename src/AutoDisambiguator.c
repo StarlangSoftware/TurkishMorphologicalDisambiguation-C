@@ -197,7 +197,7 @@ char *select_case_for_parse_string(const char *parse_string,
                                    Array_list_ptr correct_parses,
                                    int length) {
     char *surfaceForm = ((Fsm_parse_ptr) array_list_get(fsm_parses[index]->fsm_parses, 0))->form;
-    char *root = ((Fsm_parse_ptr) array_list_get(fsm_parses[index]->fsm_parses, 0))->root->name;
+    char *root = ((Fsm_parse_ptr) array_list_get(fsm_parses[index]->fsm_parses, 0))->root->word.name;
     char *lastWord = ((Fsm_parse_ptr) array_list_get(fsm_parses[length - 1]->fsm_parses, 0))->form;
     if (strcmp(parse_string, "P2SG$P3SG") == 0) {
         /* kısmını, duracağını, grubunun */
