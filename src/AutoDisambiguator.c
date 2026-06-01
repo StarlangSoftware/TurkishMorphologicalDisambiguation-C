@@ -20,7 +20,7 @@ bool is_any_word_second_person(int index, Array_list_ptr correct_parses) {
     int count = 0;
     for (int i = index - 1; i >= 0; i--) {
         Fsm_parse_ptr fsm_parse = array_list_get(correct_parses, i);
-        if (fsm_parse_contains_tag(fsm_parse, A2SG) || fsm_parse_contains_tag(fsm_parse, P2SG)) {
+        if (parse_contains_tag((Morphological_parse_ptr)fsm_parse, A2SG) || parse_contains_tag((Morphological_parse_ptr)fsm_parse, P2SG)) {
             count++;
         }
     }
@@ -37,8 +37,8 @@ bool is_any_word_second_person(int index, Array_list_ptr correct_parses) {
 bool is_possessive_plural(int index, Array_list_ptr correct_parses) {
     for (int i = index - 1; i >= 0; i--) {
         Fsm_parse_ptr fsm_parse = array_list_get(correct_parses, i);
-        if (is_fsm_parse_noun(fsm_parse)) {
-            return is_fsm_parse_plural(fsm_parse);
+        if (is_noun((Morphological_parse_ptr) fsm_parse)) {
+            return is_parse_plural((Morphological_parse_ptr)fsm_parse);
         }
     }
     return false;
@@ -54,7 +54,7 @@ char *next_word_pos(Fsm_parse_list_ptr next_parse_list) {
                                                        (int (*)(const void *, const void *)) compare_string);
     for (int i = 0; i < next_parse_list->fsm_parses->size; i++) {
         Fsm_parse_ptr fsm_parse = array_list_get(next_parse_list->fsm_parses, i);
-        char* pos = get_fsm_parse_pos(fsm_parse);
+        char* pos = get_pos((Morphological_parse_ptr)fsm_parse);
         put_counter_hash_map(map, pos);
         if (count_counter_hash_map(map, pos) > 1) {
             free_(pos);
@@ -176,7 +176,7 @@ bool contains_two_ne_or_ya(Fsm_parse_list_ptr *fsm_parses, const char *word, int
  */
 bool has_previous_word_tag(int index, Array_list_ptr correct_parses, Morphological_tag tag) {
     Fsm_parse_ptr fsm_parse = array_list_get(correct_parses, index - 1);
-    return index > 0 && fsm_parse_contains_tag(fsm_parse, tag);
+    return index > 0 && parse_contains_tag((Morphological_parse_ptr)fsm_parse, tag);
 }
 
 /**
@@ -197,7 +197,7 @@ char *select_case_for_parse_string(const char *parse_string,
                                    Array_list_ptr correct_parses,
                                    int length) {
     char *surfaceForm = ((Fsm_parse_ptr) array_list_get(fsm_parses[index]->fsm_parses, 0))->form;
-    char *root = ((Fsm_parse_ptr) array_list_get(fsm_parses[index]->fsm_parses, 0))->root->word.name;
+    char *root = ((Morphological_parse_ptr) array_list_get(fsm_parses[index]->fsm_parses, 0))->root->name;
     char *lastWord = ((Fsm_parse_ptr) array_list_get(fsm_parses[length - 1]->fsm_parses, 0))->form;
     if (strcmp(parse_string, "P2SG$P3SG") == 0) {
         /* kısmını, duracağını, grubunun */
@@ -479,7 +479,7 @@ char *select_case_for_parse_string(const char *parse_string,
                                            "A3PL+PNON+NOM$A3SG+PNON+NOM^DB+VERB+ZERO+PRES+A3PL$PROP+A3PL+PNON+NOM") ==
                                     0) {
                                     if (index > 0) {
-                                        if (is_fsm_parse_capital_word(
+                                        if (is_capital_word(
                                                 array_list_get(fsm_parses[index]->fsm_parses, 0))) {
                                             return "PROP+A3PL+PNON+NOM";
                                         }
@@ -1194,7 +1194,7 @@ char *select_case_for_parse_string(const char *parse_string,
                                                                            "ADJ$NOUN+A3SG+PNON+NOM$NOUN+PROP+A3SG+PNON+NOM$VERB+POS+IMP+A2SG") ==
                                                                     0) {
                                                                     if (index > 0) {
-                                                                        if (is_fsm_parse_capital_word(array_list_get(
+                                                                        if (is_capital_word(array_list_get(
                                                                                 fsm_parses[index]->fsm_parses, 0))) {
                                                                             return "NOUN+PROP+A3SG+PNON+NOM";
                                                                         }

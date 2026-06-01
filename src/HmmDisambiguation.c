@@ -94,11 +94,11 @@ Array_list_ptr disambiguate_hmm(Hmm_model_ptr model,
     }
     for (int i = 0; i < fsm_parses[0]->fsm_parses->size; i++) {
         Fsm_parse_ptr currentParse = array_list_get(fsm_parses[0]->fsm_parses, i);
-        w1 = get_word_with_pos2(currentParse);
+        w1 = get_word_with_pos((Morphological_parse_ptr)currentParse);
         probability = get_probability(model->word_uni_gram_model, 1, w1);
         free_(w1);
-        for (j = 0; j < currentParse->inflectional_groups->size; j++) {
-            ig1 = inflectional_group_to_string(array_list_get(currentParse->inflectional_groups, j));
+        for (j = 0; j < ((Morphological_parse_ptr)currentParse)->inflectional_groups->size; j++) {
+            ig1 = inflectional_group_to_string(array_list_get(((Morphological_parse_ptr)currentParse)->inflectional_groups, j));
             probability *= get_probability(model->ig_uni_gram_model, 1, ig1);
             free_(ig1);
         }
@@ -111,14 +111,14 @@ Array_list_ptr disambiguate_hmm(Hmm_model_ptr model,
             Fsm_parse_ptr currentParse = array_list_get(fsm_parses[i]->fsm_parses, j);
             for (k = 0; k < fsm_parses[i - 1]->fsm_parses->size; k++) {
                 Fsm_parse_ptr previousParse = array_list_get(fsm_parses[i - 1]->fsm_parses, k);
-                w1 = get_word_with_pos2(previousParse);
-                w2 = get_word_with_pos2(currentParse);
+                w1 = get_word_with_pos((Morphological_parse_ptr) previousParse);
+                w2 = get_word_with_pos((Morphological_parse_ptr) currentParse);
                 probability = probabilities[i - 1][k] + log(get_probability(model->word_bi_gram_model, 2, w1, w2));
                 free_(w1);
                 free_(w2);
-                for (t = 0; t < ((Fsm_parse_ptr) array_list_get(fsm_parses[i]->fsm_parses, j))->inflectional_groups->size; t++) {
-                    ig1 = inflectional_group_to_string(array_list_get(previousParse->inflectional_groups, previousParse->inflectional_groups->size - 1));
-                    ig2 = inflectional_group_to_string(array_list_get(currentParse->inflectional_groups, t));
+                for (t = 0; t < ((Morphological_parse_ptr) array_list_get(fsm_parses[i]->fsm_parses, j))->inflectional_groups->size; t++) {
+                    ig1 = inflectional_group_to_string(array_list_get(((Morphological_parse_ptr) previousParse)->inflectional_groups, ((Morphological_parse_ptr)previousParse)->inflectional_groups->size - 1));
+                    ig2 = inflectional_group_to_string(array_list_get(((Morphological_parse_ptr)currentParse)->inflectional_groups, t));
                     probability += log(get_probability(model->ig_bi_gram_model, 2, ig1, ig2));
                     free_(ig1);
                     free_(ig2);

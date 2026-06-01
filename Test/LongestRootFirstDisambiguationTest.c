@@ -20,7 +20,7 @@ int main(){
         Sentence_ptr new_sentence = create_sentence();
         for (int j = 0; j < sentence->words->size; j++){
             Disambiguated_word_ptr word1 = array_list_get(sentence->words, j);
-            sentence_add_word(new_sentence, clone_string(word1->name));
+            sentence_add_word(new_sentence, clone_string(word1->word.name));
         }
         Fsm_parse_list_ptr* fsm_parses = robust_morphological_analysis2(fsm, new_sentence);
         free_sentence(new_sentence);

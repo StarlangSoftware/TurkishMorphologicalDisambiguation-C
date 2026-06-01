@@ -24,7 +24,7 @@ double get_word_probability(Hmm_model_ptr model,
                             int index) {
     if (index != 0 && correct_fsm_parses->size == index) {
         Fsm_parse_ptr fsm_parse = array_list_get(correct_fsm_parses, index - 1);
-        char* word_with_pos = get_word_with_pos2(fsm_parse);
+        char* word_with_pos = get_word_with_pos((Morphological_parse_ptr)fsm_parse);
         double p =  get_probability(model->word_bi_gram_model, 2, word_with_pos, word);
         free_(word_with_pos);
         return p;
@@ -97,7 +97,7 @@ char *get_best_root_word(Hmm_model_ptr model, Fsm_parse_list_ptr parse_list) {
     char* best_word = NULL;
     best_probability = -INT_MAX;
     for (int j = 0; j < parse_list->fsm_parses->size; j++) {
-        char* word = get_word_with_pos2(array_list_get(parse_list->fsm_parses, j));
+        char* word = get_word_with_pos(array_list_get(parse_list->fsm_parses, j));
         char* ig = transition_list(array_list_get(parse_list->fsm_parses, j));
         double wordProbability = get_probability(model->word_uni_gram_model, 1, word);
         double igProbability = get_probability(model->ig_uni_gram_model, 1, ig);
@@ -139,7 +139,7 @@ Array_list_ptr disambiguate_root_first(Hmm_model_ptr model,
         best_word = get_best_root_word(model, fsm_parses[i]);
         reduce_to_parses_with_same_root_and_pos(fsm_parses[i], best_word);
         best_parse = get_parse_with_best_ig_probability(model, fsm_parses[i], correct_fsm_parses, i);
-        if (best_parse->inflectional_groups->size > 0) {
+        if (((Morphological_parse_ptr)best_parse)->inflectional_groups->size > 0) {
             array_list_add(correct_fsm_parses, clone_fsm_parse(best_parse));
         }
     }

@@ -36,14 +36,14 @@ Array_list_ptr disambiguate_longest_root_first(Hash_map_ptr root_list, Fsm_parse
         bool root_found = false;
         for (int j = 0; j < fsmParseList->fsm_parses->size; j++) {
             Fsm_parse_ptr fsm_parse = array_list_get(fsmParseList->fsm_parses, j);
-            if (strcmp(fsm_parse->root->word.name, best_root) == 0) {
+            if (strcmp(((Morphological_parse_ptr)fsm_parse)->root->name, best_root) == 0) {
                 root_found = true;
                 break;
             }
         }
         if (!root_found){
             best_parse = get_parse_with_longest_root_word(fsmParseList);
-            reduce_to_parses_with_same_root(fsm_parses[i], best_parse->root->word.name);
+            reduce_to_parses_with_same_root(fsm_parses[i], ((Morphological_parse_ptr) best_parse)->root->name);
         } else {
             reduce_to_parses_with_same_root(fsm_parses[i], best_root);
         }
